@@ -14,4 +14,17 @@ class Session {
     required this.message,
     required this.streakdays
 });
+
+  // Convert a Session to Map. The keys must correspond to the names of the
+  // columns in the database.
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'started': started,
+      'ended': ended,
+      'duration': duration,
+      'message': message,
+      'streakdays': streakdays
+    };
+  }
 }

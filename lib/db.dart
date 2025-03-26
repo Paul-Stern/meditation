@@ -30,6 +30,7 @@ class DatabaseHelper {
         startedAt INTEGER NOT NULL,
         endedAt INTEGER NOT NULL,
         duration INTEGER NOT NULL,
+        message TEXT,
         streakdays INTEGER,
     )
     '''); 
