@@ -27,7 +27,7 @@ const Map<String, String> audioFiles = {
 };
 
 class SettingsWidget extends StatefulWidget {
-  const SettingsWidget({Key? key}) : super(key: key);
+  const SettingsWidget({super.key});
 
   @override
   _SettingsWidgetState createState() => _SettingsWidgetState();
@@ -235,7 +235,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     showAboutDialog(
                       context: context,
                       applicationName: packageInfo.appName,
-                      applicationVersion: packageInfo.version + ' (${packageInfo.buildNumber})',
+                      applicationVersion: '${packageInfo.version} (${packageInfo.buildNumber})',
                       applicationLegalese:
                           "${packageInfo.packageName}\n\nA meditation timer made with Flutter.",
                     );

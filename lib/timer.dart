@@ -50,7 +50,7 @@ class NotificationController {
 }
 
 class TimerWidget extends StatefulWidget {
-  const TimerWidget({Key? key}) : super(key: key);
+  const TimerWidget({super.key});
 
   @override
   State<TimerWidget> createState() => _TimerWidgetState();
@@ -434,7 +434,7 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
         for (var i = 1; i <= intervalCount; i++) {
           var id = intervalNotificationID + i;
           log.d(
-              "scheduling interval notification with id $id " + "in ${i * intervalTime.inMinutes}");
+              "scheduling interval notification with id $id " "in ${i * intervalTime.inMinutes}");
           await scheduleIntervalNotification(i * intervalTime.inSeconds, id: id);
           intervalNotificationIDs.add(id);
         }
@@ -617,7 +617,7 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
     var minutes;
     var timeChoices = [5, 10, 15, 20, 25, 30, 45, 60];
 
-    var _selected = await showDialog(
+    var selected = await showDialog(
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
@@ -645,15 +645,15 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
           );
         });
 
-    if (_selected == null) {
+    if (selected == null) {
       // we just closed the dialog without choosing anything
       return;
     }
 
-    if (_selected >= 0) {
+    if (selected >= 0) {
       // preset chosen
-      minutes = _selected;
-    } else if (_selected == -1) {
+      minutes = selected;
+    } else if (selected == -1) {
       // inputting custom time
       final Color borderColor = primaryColor!;
       final Color errorColor = secondaryColor!;
@@ -716,7 +716,7 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
                     ),
                   ),
                 ),
-                ButtonBar(
+                OverflowBar(
                   alignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
@@ -783,7 +783,7 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
                 child: Stack(
                   alignment: AlignmentDirectional.center,
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.shortestSide / 1.5,
                       height: MediaQuery.of(context).size.shortestSide / 1.5,
                       child: CircularProgressIndicator(

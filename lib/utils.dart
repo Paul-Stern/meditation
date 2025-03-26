@@ -101,7 +101,7 @@ List<int> getDurationNumbers(Duration d) {
 String formatSeconds(int seconds) {
   int mm = seconds ~/ 60;
   int ss = seconds % 60;
-  return mm.toString().padLeft(2, '0') + ':' + ss.toString().padLeft(2, '0');
+  return '${mm.toString().padLeft(2, '0')}:${ss.toString().padLeft(2, '0')}';
 }
 
 Duration timeLeftTo(DateTime endTime, {bool roundToZero = false}) {
@@ -192,8 +192,9 @@ Future<(bool, List<NotificationPermission>)> requestNotificationPermissions(Buil
       .checkPermissionList(channelKey: channelKey, permissions: permissionList);
 
 // If all permissions are allowed, there is nothing to do
-  if (permissionsAllowed.length == permissionList.length)
+  if (permissionsAllowed.length == permissionList.length) {
     return (requestedUserAction, permissionsAllowed);
+  }
 
 // Refresh the permission list with only the disallowed permissions
   List<NotificationPermission> permissionsNeeded =
@@ -226,7 +227,7 @@ Future<(bool, List<NotificationPermission>)> requestNotificationPermissions(Buil
       // i'd say the best bet is to just not do anything
       // we also don't know how it works on every version of android
       log.e(
-          "channel permissions have been tampered with. couldn't enable: ${lockedPermissions} on channel: ${channelKey}");
+          "channel permissions have been tampered with. couldn't enable: $lockedPermissions on channel: $channelKey");
       // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Issue with notification settings. If app doesn't work, try uninstalling and reinstalling")));
 //       await showDialog(
 //           context: context,

@@ -169,7 +169,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +185,6 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: bgColor,
           typography: Typography.material2021(),
           canvasColor: blackTheme ? Colors.black : surfaceColor,
-          dialogBackgroundColor: surfaceColor,
           snackBarTheme: SnackBarThemeData(
             backgroundColor: surfaceColor,
             contentTextStyle: TextStyle(color: Colors.white),
@@ -216,7 +215,7 @@ class MyApp extends StatelessWidget {
                       height: 2,
                       color: Colors.white,
                     ),
-              )),
+              ), dialogTheme: DialogThemeData(backgroundColor: surfaceColor)),
       home: const Home(),
     );
   }
@@ -238,7 +237,7 @@ ButtonStyle timeSelectionButtonStyle = TextButton.styleFrom(
 );
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
