@@ -259,6 +259,14 @@ class Home extends StatelessWidget {
               );
             },
           ),
+          IconButton(
+            icon: const Icon(
+              Icons.settings_backup_restore_outlined,
+            ),
+            onPressed: () {
+              
+            }
+          )
         ],
       ),
       body: Center(
