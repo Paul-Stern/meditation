@@ -15,6 +15,7 @@ import 'package:meditation/audioplayer.dart';
 import 'package:meditation/settings.dart';
 import 'package:meditation/timer.dart';
 import 'package:meditation/utils.dart';
+import 'package:meditation/journal.dart';
 
 final EventBus eventBus = EventBus(sync: true);
 
@@ -248,6 +249,17 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: Text('Meditation Timer'),
         actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.history,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const JournalWidget()),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(
               Icons.settings_outlined,
