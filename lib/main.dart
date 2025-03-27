@@ -16,6 +16,7 @@ import 'package:meditation/settings.dart';
 import 'package:meditation/timer.dart';
 import 'package:meditation/utils.dart';
 import 'package:meditation/journal.dart';
+import 'package:meditation/stats.dart';
 
 final EventBus eventBus = EventBus(sync: true);
 
@@ -256,7 +257,7 @@ class Home extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const JournalWidget()),
+                MaterialPageRoute(builder: (context) => const StatsWidget()),
               );
             },
           ),
