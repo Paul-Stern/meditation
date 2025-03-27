@@ -16,7 +16,7 @@ class JournalWidget extends StatefulWidget {
 class _JournalWidgetState extends State<JournalWidget> {
 
   List<Session> sessions = [];
-  DatabaseHelper? db;
+  DatabaseHelper db = DatabaseHelper.instance;
 
   // init state
   // @override
@@ -26,9 +26,15 @@ class _JournalWidgetState extends State<JournalWidget> {
   //   sessions = await db!.getSessions();
   // }
 
+  @override
+  void initState() {
+    super.initState();
+    db = DatabaseHelper.instance;
+  }
+
   FutureBuilder<List<Session>> buildSessionList() {
     return FutureBuilder<List<Session>>(
-      future: db!.getSessions(),
+      future: db.getSessions(),
       builder: (BuildContext context, AsyncSnapshot<List<Session>> snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
@@ -66,7 +72,7 @@ class _JournalWidgetState extends State<JournalWidget> {
       appBar: AppBar(
         title: const Text('Journal'),
       ),
-      body: buildSessionListView(),
+      body: buildSessionList()
     );
   }
 }

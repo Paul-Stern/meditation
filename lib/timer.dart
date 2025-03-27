@@ -17,6 +17,8 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:meditation/audioplayer.dart';
 import 'package:meditation/utils.dart';
+import 'package:meditation/session.dart';
+import 'package:meditation/db.dart';
 
 enum TimerState { stopped, delaying, meditating }
 
@@ -77,6 +79,9 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
   Duration intervalTime = const Duration(minutes: 0);
   int intervalCount = 0;
 
+  int sessionID = 0;
+  DatabaseHelper? db;
+
   @override
   void initState() {
     super.initState();
@@ -89,6 +94,9 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
         timerMinutes = prefs.getInt('timer-minutes') ?? 0;
       });
     });
+
+    // get db
+    db = DatabaseHelper.instance;
 
     AwesomeNotifications().setListeners(
         onActionReceivedMethod: NotificationController.onActionReceivedMethod,
@@ -502,6 +510,16 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
 
     AwesomeNotifications().cancelSchedulesByGroupKey('timer-interval');
 
+    sessionID = await db!.getNewId();
+
+    db!.insertSession(Session(
+      id: sessionID,
+      started: startTime.millisecondsSinceEpoch,
+      ended: endTime.millisecondsSinceEpoch,
+      duration: timeLeft.inSeconds,
+      message: "",
+      streakdays: 0
+    ));
     NAudioPlayer audioPlayer = GetIt.I.get<NAudioPlayer>();
     if (playAudio) {
       audioPlayer.playSound('end-sound');
