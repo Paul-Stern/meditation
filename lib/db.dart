@@ -1,6 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:meditation/session.dart';
+import 'package:meditation/utils.dart';
 
 class DatabaseHelper {
 
@@ -29,6 +30,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
   }
 
   Future _onCreate(Database db, int version) async {
+    log.d("creating database");
     await db.execute('''
       CREATE TABLE sessions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -44,6 +46,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
   Future<int> insertSession(Session session) async {
     // get database
     Database db = await instance.db;
+    log.d("inserting session $session");
     return await db.insert(
       'sessions',
       session.toMap(),

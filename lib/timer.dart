@@ -513,11 +513,11 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
 
     sessionID = await db.getNewId();
 
-    log.i("sessionID: $sessionID");
+    log.d("sessionID: $sessionID");
 
     // Duration dur = endTime.difference(startTime) - timeLeft;
     Duration dur = Duration(minutes: timerMinutes) - timeLeft;
-    log.i("session duration: ${dur.inSeconds} seconds");
+    log.d("session duration: ${dur.inSeconds} seconds");
 
     db.insertSession(Session(
       id: sessionID,

@@ -251,7 +251,7 @@ class Home extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: const Icon(
-              Icons.history,
+              Icons.history_outlined,
             ),
             onPressed: () {
               Navigator.push(
