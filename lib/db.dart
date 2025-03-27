@@ -8,7 +8,6 @@ class DatabaseHelper {
 
   // static final DatabaseHelper instance = DatabaseHelper.instance()
   static Database? _database;
-
   Future<Database> get db async {
     _database ??= await _initDatabase();
     return _database!;
@@ -34,5 +33,17 @@ class DatabaseHelper {
         streakdays INTEGER,
     )
     '''); 
+  }
+  //
+  Future<void> insertSession(Session session) async {
+    // get database
+
+
+    final db = await _database;
+    await db.insert(
+      'sessions',
+      session.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 }
