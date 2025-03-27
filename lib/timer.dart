@@ -80,7 +80,7 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
   int intervalCount = 0;
 
   int sessionID = 0;
-  DatabaseHelper? db;
+  DatabaseHelper db = DatabaseHelper.instance;
 
   @override
   void initState() {
@@ -510,9 +510,12 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
 
     AwesomeNotifications().cancelSchedulesByGroupKey('timer-interval');
 
-    sessionID = await db!.getNewId();
 
-    db!.insertSession(Session(
+    sessionID = await db.getNewId();
+
+    log.i("sessionID: $sessionID");
+
+    db.insertSession(Session(
       id: sessionID,
       started: startTime.millisecondsSinceEpoch,
       ended: endTime.millisecondsSinceEpoch,

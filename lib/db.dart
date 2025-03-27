@@ -64,7 +64,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
   // get new id
   Future<int> getNewId() async {
     Database db = await instance.db;
-    final List<Map<String, Object?>> queryResult = await db.query('sessions', orderBy: 'id ASC', limit: 1);
+    final List<Map<String, Object?>> queryResult = await db.query('sessions', orderBy: 'id DESC', limit: 1);
     if (queryResult.isEmpty) {
       return 0;
     } else {
