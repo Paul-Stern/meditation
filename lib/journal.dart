@@ -37,14 +37,41 @@ class _JournalWidgetState extends State<JournalWidget> {
       future: db.getSessions(),
       builder: (BuildContext context, AsyncSnapshot<List<Session>> snapshot) {
         if (snapshot.hasData) {
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                title: Text(snapshot.data![index].started.toString()!),
-              );
-            },
+          return DataTable(
+            columns: const <DataColumn>[
+              DataColumn(
+                label: Text(
+                  'Started',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+             DataColumn(
+                label: Text(
+                  'Duration',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ],
+            rows: snapshot.data!
+                .map(
+                  (session) => DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text(toLocalTime(session.started).toString())),
+                      DataCell(Text(formatDuration(toDuration(session.duration)))),
+                    ],
+                  ),
+                )
+                .toList(),
           );
+          // return ListView.builder(
+          //   itemCount: snapshot.data!.length,
+          //   itemBuilder: (BuildContext context, int index) {
+          //     return ListTile(
+          //       title: Text(snapshot.data![index].started.toString()),
+
+          //     );
+          //   },
+          // );
         } else {
           return const Center(child: CircularProgressIndicator());
         }
