@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:meditation/table.dart';
 import 'package:meditation/stats.dart';
 
@@ -9,11 +10,14 @@ class DataWidget extends StatefulWidget {
   State<DataWidget> createState() => _DataState();
 }
 
-class _DataState extends State<DataWidget> {
+class _DataState extends State<DataWidget> with TickerProviderStateMixin{
   DateTime timestamp = DateTime.now();
   int streakdays = 0;
   int totaldays = 0;
   Duration totaltime = Duration.zero;
+  // late Ticker ticker;
+  late final TabController _tabController;
+  // TabController? _tabController;
 
   String getTotalTime() {
     String hours = totaltime.inHours.toString();
@@ -23,32 +27,39 @@ class _DataState extends State<DataWidget> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Stats'),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: const <Widget>[
+            Tab(text: 'Overview'),
+            Tab(text: 'Table'),
+          ],
+        ),
       ),
-      body:
-          NavigationBar(
-            destinations: const [
-              NavigationDestination(
-                icon: Icon(Icons.history),
-                label: 'Overview',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.settings),
-                label: 'Details',
-              ),
-            ],
-            onDestinationSelected: (int index) {
-              if (index == 0) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const StatsWidget()));
-              }
-              if (index == 1) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const TableWidget()));
-              }
-            },  
-          ),
-    );
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          StatsWidget(),
+          TableWidget(),
+        ],
+      ),
+   );
   }
 }
