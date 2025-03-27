@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:meditation/journal.dart';
 
 class StatsWidget extends StatefulWidget {
-  const StatsWidget({Key? key}) : super(key: key);
+  const StatsWidget({super.key});
 
   @override
-  State<StatsWidget> createState() => _StatsState();
+  State<StatsWidget> createState() => _StatsWidgetState();
 }
 
-class _StatsState extends State<StatsWidget> {
+class _StatsWidgetState extends State<StatsWidget> {
   DateTime timestamp = DateTime.now();
   int streakdays = 0;
   int totaldays = 0;
@@ -21,25 +20,22 @@ class _StatsState extends State<StatsWidget> {
     return "$hours h $min m";
   }
 
+ 
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Stats'),
-      ),
-      body: Column(
-        children: [
-          Text("Total time: ${getTotalTime()}"),
-          Text("Total days: $totaldays"),
-          Text("Streak: $streakdays"),
-          TextButton(
-            child: const Text("Details"),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const JournalWidget()));
-            },
-          )
-        ],
-      )
-    );
+    return Card(
+        child: SizedBox.expand(
+          child: Center(
+            child: Column(
+              children: [
+                Text("Total time: ${getTotalTime()}"),
+                Text("Total days: ${totaldays}"),
+                Text("Streak days: ${streakdays}"),
+              ],
+            ),
+          ),
+        ),
+      );
   }
 }

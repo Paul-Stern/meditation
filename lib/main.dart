@@ -15,8 +15,8 @@ import 'package:meditation/audioplayer.dart';
 import 'package:meditation/settings.dart';
 import 'package:meditation/timer.dart';
 import 'package:meditation/utils.dart';
-import 'package:meditation/journal.dart';
-import 'package:meditation/stats.dart';
+import 'package:meditation/table.dart';
+import 'package:meditation/data.dart';
 
 final EventBus eventBus = EventBus(sync: true);
 
@@ -257,7 +257,7 @@ class Home extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const StatsWidget()),
+                MaterialPageRoute(builder: (context) => const DataWidget()),
               );
             },
           ),

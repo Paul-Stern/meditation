@@ -2,18 +2,19 @@
 import 'package:meditation/session.dart';
 import 'package:meditation/db.dart';
 import 'package:flutter/material.dart';
+import 'package:meditation/data.dart';
 
 // import 'package:sqflite/sqflite.dart';
 
-class JournalWidget extends StatefulWidget {
-  const JournalWidget({Key? key}) : super(key: key);
+class TableWidget extends StatefulWidget {
+  const TableWidget({Key? key}) : super(key: key);
 
   @override
-  State<JournalWidget> createState() => _JournalWidgetState();
+  State<TableWidget> createState() => _TableWidgetState();
 
 }
 
-class _JournalWidgetState extends State<JournalWidget> {
+class _TableWidgetState extends State<TableWidget> {
 
   List<Session> sessions = [];
   DatabaseHelper db = DatabaseHelper.instance;
