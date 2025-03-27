@@ -37,9 +37,7 @@ class DatabaseHelper {
   //
   Future<void> insertSession(Session session) async {
     // get database
-
-
-    final db = await _database;
+    Database db = await _database!;
     await db.insert(
       'sessions',
       session.toMap(),
