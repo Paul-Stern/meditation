@@ -100,11 +100,8 @@ class _TableWidgetState extends State<TableWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Journal'),
-      ),
-      body: buildSessionList()
+    return Card(
+      child: buildSessionList(),
     );
   }
 }
