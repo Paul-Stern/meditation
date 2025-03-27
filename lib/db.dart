@@ -65,11 +65,10 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
   Future<int> getNewId() async {
     Database db = await instance.db;
     final List<Map<String, Object?>> queryResult = await db.query('sessions', orderBy: 'id ASC', limit: 1);
-    var result = queryResult;
-    if (result.isEmpty) {
+    if (queryResult.isEmpty) {
       return 0;
     } else {
-      return (result.first['id'] as int) + 1;
+      return (queryResult.first['id'] as int) + 1;
     }
     // if (id == null) {
     //   return 0;
