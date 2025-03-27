@@ -1,3 +1,5 @@
+import 'package:meditation/utils.dart';
+
 class Session {
   final int id;
   final int started;
@@ -44,6 +46,7 @@ Duration toDuration(int unixTime) {
   return Duration(milliseconds: unixTime);
 }
 String formatDuration(Duration d) {
+  // log.i("d: $d");
   String hours = d.inHours.toString().padLeft(1, '0');
   String min = d.inMinutes.remainder(60).toString().padLeft(2, '0');
   String sec = d.inSeconds.remainder(60).toString().padLeft(2, '0');

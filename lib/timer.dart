@@ -515,11 +515,15 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
 
     log.i("sessionID: $sessionID");
 
+    // Duration dur = endTime.difference(startTime) - timeLeft;
+    Duration dur = Duration(minutes: timerMinutes) - timeLeft;
+    log.i("session duration: ${dur.inSeconds} seconds");
+
     db.insertSession(Session(
       id: sessionID,
       started: startTime.millisecondsSinceEpoch,
       ended: endTime.millisecondsSinceEpoch,
-      duration: timeLeft.inSeconds,
+      duration: dur.inSeconds * 1000,
       message: "",
       streakdays: 0
     ));
