@@ -27,4 +27,11 @@ class Session {
       'streakdays': streakdays
     };
   }
+  Session.fromMap(Map<String, dynamic> map)
+      : id = map['id'],
+        started = map['started'],
+        ended = map['ended'],
+        duration = map['duration'],
+        message = map['message'],
+        streakdays = map['streakdays'];
 }

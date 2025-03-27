@@ -35,13 +35,18 @@ class DatabaseHelper {
     '''); 
   }
   //
-  Future<void> insertSession(Session session) async {
+  Future<int> insertSession(Session session) async {
     // get database
     Database db = await _database!;
-    await db.insert(
+    return await db.insert(
       'sessions',
       session.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+  }
+  Future<List<Session>> getSessions() async {
+    Database db = await _database!;
+    final List<Map<String, Object?>> queryResult = await db.query('sessions');
+    return queryResult.map((e) => Session.fromMap(e)).toList();
   }
 }
