@@ -43,7 +43,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
   //
   Future<int> insertSession(Session session) async {
     // get database
-    Database db = await _database!;
+    Database db = await instance.db;
     return await db.insert(
       'sessions',
       session.toMap(),
@@ -51,13 +51,13 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     );
   }
   Future<List<Session>> getSessions() async {
-    Database db = await _database!;
+    Database db = await instance.db;
     final List<Map<String, Object?>> queryResult = await db.query('sessions');
     return queryResult.map((e) => Session.fromMap(e)).toList();
   }
   // get last id
   Future<int> getLastId() async {
-    Database db = await _database!;
+    Database db = await instance.db;
     final List<Map<String, Object?>> queryResult = await db.query('sessions', orderBy: 'id DESC', limit: 1);
     return queryResult.first['id'] as int;
   }
