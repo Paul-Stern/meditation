@@ -10,7 +10,7 @@ class DatabaseHelper {
 
 static final DatabaseHelper instance = DatabaseHelper._instance();
   static final _databaseName = "sessions.db";
-  static final _databaseVersion = 1;
+  static final _databaseVersion = 2;
 
 
   DatabaseHelper._instance();
@@ -83,6 +83,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     // }
   }
   // import sessions from csv
+  /*
   Future<void> importSessionsFromCsv(String filepath) async {
     Database db = await instance.db;
     final _rawData = await File(filepath).readAsString();
@@ -92,4 +93,5 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
       await insertSession(session);
     }
   }
+  */
 }

@@ -39,6 +39,7 @@ class _TableWidgetState extends State<TableWidget> {
     return FutureBuilder<List<Session>>(
       future: db.getSessions(),
       builder: (BuildContext context, AsyncSnapshot<List<Session>> snapshot) {
+        u.log.d(snapshot);
         if (snapshot.hasData) {
           return SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -64,7 +65,7 @@ class _TableWidgetState extends State<TableWidget> {
                         DataCell(
                           Card(
                             child: InkWell(
-                              child: Text(toLocalTime(session.started).toString()),
+                              child: Text(session.started.toString()),
                               onTap: 
                                 () => {
                                   u.log.d('Row was tapped!'),
@@ -77,7 +78,7 @@ class _TableWidgetState extends State<TableWidget> {
                               )
                           ),
                         ),
-                        DataCell(Text(formatDuration(toDuration(session.duration)))),
+                        DataCell(Text(formatDuration(session.duration))),
                       ],
                     ),
                   )

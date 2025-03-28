@@ -521,9 +521,9 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
 
     db.insertSession(Session(
       id: sessionID,
-      started: startTime.millisecondsSinceEpoch,
-      ended: endTime.millisecondsSinceEpoch,
-      duration: dur.inSeconds * 1000,
+      started: startTime,
+      ended: endTime,
+      duration: dur,
       message: ""
     ));
     NAudioPlayer audioPlayer = GetIt.I.get<NAudioPlayer>();

@@ -2,9 +2,9 @@ import 'package:meditation/utils.dart';
 
 class Session {
   final int id;
-  final int started;
-  final int ended;
-  final int duration;
+  final DateTime started;
+  final DateTime ended;
+  final Duration duration;
   final String message;
 
   Session({
@@ -20,34 +20,38 @@ class Session {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'started': started,
-      'ended': ended,
-      'duration': duration,
+      'started': started.millisecondsSinceEpoch,
+      'ended': ended.millisecondsSinceEpoch,
+      'duration': duration.inMilliseconds,
       'message': message,
     };
   }
   Session.fromMap(Map<String, dynamic> map)
       : id = map['id'],
-        started = map['started'],
-        ended = map['ended'],
-        duration = map['duration'],
+        started = DateTime.fromMillisecondsSinceEpoch(map['started']),
+        ended = DateTime.fromMillisecondsSinceEpoch(map['ended']),
+        duration = Duration(milliseconds: map['duration']),
         message = map['message'];
 
 
   // define toString method
+  @override
   String toString() {
-    return 'id: $id\nstarted: $started\nended: $ended\nduration: $duration\nmessage: $message';
+    final String d = formatDuration(duration);
+    return 'id: $id\nstarted: $started\nended: $ended\nduration: $d\nmessage: $message';
   }
   // gets a session from a csv row
+  /*
   static Session fromCsv(List<dynamic> row) {
     return Session(
       id: int.parse(row[0]),
-      started: int.parse(row[1]),
+      started: DateTime.parse(row[1]),
       ended: int.parse(row[2]),
       duration: int.parse(row[3]),
       message: row[4]
     );
   }
+  */
 }
 
 // toLocalTime helper function
