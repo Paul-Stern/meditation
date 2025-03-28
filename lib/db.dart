@@ -64,6 +64,19 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     final List<Map<String, Object?>> queryResult = await db.query('sessions');
     return queryResult.map((e) => Session.fromMap(e)).toList();
   }
+
+  Future<Duration> getTotalDuration() async {
+    Database db = await instance.db;
+    final List<Map<String, Object?>> queryResult = await db.query(
+      'sessions',
+      columns: ['duration'],
+      );
+    int totalDuration = 0;
+    for (var element in queryResult) {
+      totalDuration += element['duration'] as int;
+    }
+    return Duration(milliseconds: totalDuration);
+  }
   // get last id
   Future<int> getLastId() async {
     Database db = await instance.db;

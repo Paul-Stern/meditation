@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meditation/db.dart';
+import 'package:sqflite/sqflite.dart';
 
 class StatsWidget extends StatefulWidget {
   const StatsWidget({super.key});
@@ -20,22 +22,31 @@ class _StatsWidgetState extends State<StatsWidget> {
     return "$hours h $min m";
   }
 
+  Future <void> initTotalTime() async{
+    totaltime = await DatabaseHelper.instance.getTotalDuration();
+  }
+
  
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        child: SizedBox.expand(
-          child: Center(
-            child: Column(
-              children: [
-                Text("Total time: ${getTotalTime()}"),
-                Text("Total days: ${totaldays}"),
-                Text("Streak days: ${streakdays}"),
-              ],
+    return FutureBuilder(
+      future: initTotalTime(),
+      builder: (context, snapshot) {
+        return Card(
+          child: SizedBox.expand(
+            child: Center(
+              child: Column(
+                children: [
+                  Text("Total time: ${getTotalTime()}"),
+                  Text("Total days: ${totaldays}"),
+                  Text("Streak days: ${streakdays}"),
+                ],
+              ),
             ),
           ),
-        ),
-      );
+        );
+      }
+    );
   }
 }
