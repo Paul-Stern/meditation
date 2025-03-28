@@ -65,9 +65,14 @@ class _TableWidgetState extends State<TableWidget> {
                           Card(
                             child: InkWell(
                               child: Text(toLocalTime(session.started).toString()),
-                              onTap: () => {
-                                u.log.d('Row was tapped!'),
-                                DetailsWidget(session: session,)
+                              onTap: 
+                                () => {
+                                  u.log.d('Row was tapped!'),
+                                  showDialog(
+                                    context: context,
+                                    builder: 
+                                      (BuildContext context) => DetailsWidget(session: session)
+                                    )
                               }
                               )
                           ),
