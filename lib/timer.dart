@@ -524,8 +524,7 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
       started: startTime.millisecondsSinceEpoch,
       ended: endTime.millisecondsSinceEpoch,
       duration: dur.inSeconds * 1000,
-      message: "",
-      streakdays: 0
+      message: ""
     ));
     NAudioPlayer audioPlayer = GetIt.I.get<NAudioPlayer>();
     if (playAudio) {

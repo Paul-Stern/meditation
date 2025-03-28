@@ -54,6 +54,7 @@ dependencies:
       url: https://github.com/GAM3RG33K/flutter_settings_screens.git
       ref: 18f9377
   sqflite: ^2.4.1
+  csv: ^6.0.0
 
 
 dev_dependencies:

@@ -6,7 +6,6 @@ class Session {
   final int ended;
   final int duration;
   final String message;
-  final int streakdays;
 
   Session({
     required this.id,
@@ -14,7 +13,6 @@ class Session {
     required this.ended, 
     required this.duration, 
     required this.message,
-    required this.streakdays
 });
 
   // Convert a Session to Map. The keys must correspond to the names of the
@@ -26,7 +24,6 @@ class Session {
       'ended': ended,
       'duration': duration,
       'message': message,
-      'streakdays': streakdays
     };
   }
   Session.fromMap(Map<String, dynamic> map)
@@ -34,12 +31,12 @@ class Session {
         started = map['started'],
         ended = map['ended'],
         duration = map['duration'],
-        message = map['message'],
-        streakdays = map['streakdays'];
+        message = map['message'];
+
 
   // define toString method
   String toString() {
-    return 'id: $id\nstarted: $started\nended: $ended\nduration: $duration\nmessage: $message\nstreakdays: $streakdays';
+    return 'id: $id\nstarted: $started\nended: $ended\nduration: $duration\nmessage: $message';
   }
   // gets a session from a csv row
   static Session fromCsv(List<dynamic> row) {
@@ -48,8 +45,7 @@ class Session {
       started: int.parse(row[1]),
       ended: int.parse(row[2]),
       duration: int.parse(row[3]),
-      message: row[4],
-      streakdays: int.parse(row[5])
+      message: row[4]
     );
   }
 }
