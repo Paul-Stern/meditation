@@ -197,7 +197,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   FilePicker.platform
                       .saveFile(
                         type: FileType.custom,
-                        allowedExtensions: ['.csv'],
+                        allowedExtensions: ['csv'],
                         bytes: exportBytes
                       )
                       .then((result) {

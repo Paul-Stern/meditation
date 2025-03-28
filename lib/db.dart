@@ -7,7 +7,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:csv/csv.dart';
 import 'package:meditation/session.dart';
-import 'package:meditation/utils.dart';
+import 'package:meditation/utils.dart' as u;
 
 class DatabaseHelper {
 
@@ -36,7 +36,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
   }
 
   Future _onCreate(Database db, int version) async {
-    log.d("creating database");
+    u.log.d("creating database");
     await db.execute('''
       CREATE TABLE sessions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -52,7 +52,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
   Future<int> insertSession(Session session) async {
     // get database
     Database db = await instance.db;
-    log.d("inserting session $session");
+    u.log.d("inserting session $session");
     return await db.insert(
       'sessions',
       session.toMap(),
@@ -99,9 +99,9 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     for (int i = 1; i < _csvData.length; i++) {
       var row = _csvData[i];
       // log.d('i: $i');
-      log.d("csv row: $row");
+      u.log.d("csv row: $row");
       Session session = Session.fromCsv(row);
-      log.d("inserting session $session");
+      u.log.d("inserting session $session");
       await insertSession(session);
     }
  }
@@ -118,23 +118,41 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
       ]
     ).toList();
     final String csv = const ListToCsvConverter().convert(csvData);
-    log.d('csv: $csv');
+    u.log.d('csv: $csv');
     await File(filepath).writeAsString(csv);
  }
  // exportSessionsToU8intList
   Future <Uint8List> exportSessionsToU8intList() async {
     Database db = await instance.db;
-    final List<Map<String, Object?>> queryResult = await db.query('sessions');
-    final List<List<dynamic>> csvData = queryResult.map((e) => [
-      e['id'],
-      e['duration'],
-      e['started'],
-      e['ended'],
-      e['message']]).toList();
-    log.d('csvData: $csvData');
+    final List<Session> sessions = await getSessions();
+    final List<List<dynamic>> csvData = sessions.map((e) =>
+    [
+      e.id,
+      formatDuration(e.duration),
+      e.started.toIso8601String(),
+      e.ended.toIso8601String(),
+      e.message
+      ]
+    ).toList();
+    u.log.d('csvData: $csvData');
     final String csv = const ListToCsvConverter().convert(csvData);
-    final out = utf8.encode(csv);
-    log.d('out: $out');
-    return out;
+    u.log.d('csv: $csv');
+    return utf8.encode(csv);
+
+    // final List<Map<String, Object?>> queryResult = await db.query('sessions');
+    // log.d('queryResult: $queryResult');
+    // final List<List<dynamic>> csvData = queryResult.map((e) => [
+    //   e['id'],
+    //   e['duration'],
+    //   // DateTime.fromMillisecondsSinceEpoch(int.parse(e['started'])).toString(),
+    //   e['started'],
+    //   e['ended'],
+    //   e['message']]).toList();
+    // log.d('csvData: $csvData');
+    // final String csv = const ListToCsvConverter().convert(csvData);
+    // final out = utf8.encode(csv);
+    // log.d('out: $out');
+    // return out;
  }
+ // Convert
 }

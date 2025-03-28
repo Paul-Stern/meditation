@@ -42,13 +42,34 @@ class Session {
   }
   // gets a session from a csv row
   static Session fromCsv(List<dynamic> row) {
-    final d = Duration(
-      hours: int.parse(row[1].split(':')[0]),
-      minutes: int.parse(row[1].split(':')[1]),
+    final dstring = row[1].split(':');
+    var d = Duration();
+    if (dstring.length == 2) {
+    d = Duration(
+      hours: int.parse(dstring[0]),
+      minutes: int.parse(dstring[1]),
     );
+    } else if (dstring.length == 3) {
+       d = Duration(
+        hours: int.parse(row[1].split(':')[0]),
+        minutes: int.parse(row[1].split(':')[1]),
+        seconds: int.parse(row[1].split(':')[2]),
+      );
+    } else {
+      // wrong format
+      log.e('wrong duration format');
+    }
+
+    // check row[0] type
+    var id = 0;
+    if (row[0].runtimeType != int) {
+      id = int.parse(row[0]);
+    } else {
+      id = row[0];
+    }
 
     final s = Session(
-      id: int.parse(row[0]),
+      id: id,
       duration: d,
       started: DateTime.parse(row[2]),
       ended: DateTime.parse(row[3]),
@@ -56,6 +77,11 @@ class Session {
     );
     log.d('session from csv: $s');
     return s;
+  }
+  // format For export
+  String formatForExport() {
+    final String d = formatDuration(duration);
+    return '$id,$d,$started,$ended,$message';
   }
 }
 
