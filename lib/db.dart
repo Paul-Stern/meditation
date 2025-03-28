@@ -108,16 +108,33 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
  Future<void> exportSessionsToCsv(String filepath) async {
     Database db = await instance.db;
     final List<Map<String, Object?>> queryResult = await db.query('sessions');
-    final List<List<dynamic>> csvData = queryResult.map((e) => [e['id'], e['started'], e['ended'], e['duration'], e['message']]).toList();
+    final List<List<dynamic>> csvData = queryResult.map((e) =>
+    [
+      e['id'],
+      e['duration'],
+      e['started'],
+      e['ended'],
+      e['message']
+      ]
+    ).toList();
     final String csv = const ListToCsvConverter().convert(csvData);
+    log.d('csv: $csv');
     await File(filepath).writeAsString(csv);
  }
  // exportSessionsToU8intList
   Future <Uint8List> exportSessionsToU8intList() async {
     Database db = await instance.db;
     final List<Map<String, Object?>> queryResult = await db.query('sessions');
-    final List<List<dynamic>> csvData = queryResult.map((e) => [e['id'], e['started'], e['ended'], e['duration'], e['message']]).toList();
+    final List<List<dynamic>> csvData = queryResult.map((e) => [
+      e['id'],
+      e['duration'],
+      e['started'],
+      e['ended'],
+      e['message']]).toList();
+    log.d('csvData: $csvData');
     final String csv = const ListToCsvConverter().convert(csvData);
-    return utf8.encode(csv);
+    final out = utf8.encode(csv);
+    log.d('out: $out');
+    return out;
  }
 }
