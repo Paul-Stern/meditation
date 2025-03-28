@@ -1,4 +1,5 @@
 // import 'package:flutter/widgets.dart';
+import 'package:meditation/details.dart';
 import 'package:meditation/session.dart';
 import 'package:meditation/db.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,10 @@ class _TableWidgetState extends State<TableWidget> {
                           Card(
                             child: InkWell(
                               child: Text(toLocalTime(session.started).toString()),
-                              onTap: () => u.log.d('Row was tapped!'),
+                              onTap: () => {
+                                u.log.d('Row was tapped!'),
+                                DetailsWidget(session: session,)
+                              }
                               )
                           ),
                         ),

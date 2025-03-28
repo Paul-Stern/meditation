@@ -36,6 +36,11 @@ class Session {
         duration = map['duration'],
         message = map['message'],
         streakdays = map['streakdays'];
+
+  // define toString method
+  String toString() {
+    return 'id: $id\nstarted: $started\nended: $ended\nduration: $duration\nmessage: $message\nstreakdays: $streakdays';
+  }
 }
 
 // toLocalTime helper function
