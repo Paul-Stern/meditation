@@ -31,7 +31,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
 //    def minSdk = 21 // because of a bug, you need to manually set this below
-    def targetSdk = 34
+    def targetSdk = 35
 
     namespace "com.nyxkn.meditation"
     compileSdkVersion targetSdk
