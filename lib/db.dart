@@ -83,7 +83,6 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     // }
   }
   // import sessions from csv
-  /*
   Future<void> importSessionsFromCsv(String filepath) async {
     Database db = await instance.db;
     final _rawData = await File(filepath).readAsString();
@@ -93,5 +92,4 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
       await insertSession(session);
     }
   }
-  */
 }

@@ -140,6 +140,26 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   ])
             ]),
             SettingsGroup(
+              title: 'Data',
+              children: [
+                SimpleSettingsTile(
+                  title: 'Import data',
+                  onTap: () => {
+                    /*
+                    // pick a file
+                    FilePicker.platform
+                        .pickFiles(
+                          type: FileType.custom,
+                          allowedExtensions: ['csv'],
+                        )
+                        .then((result) {
+                    })
+                    */
+                  }
+                )
+              ],
+            ),
+            SettingsGroup(
               title: 'Sounds',
               children: <Widget>[
                 RadioModalSettingsTile<int>(
@@ -251,6 +271,30 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class DataSettingsTile extends SimpleSettingsTile {
+  DataSettingsTile({
+    required String title,
+    required String subtitle,
+    // required String settingKey,
+    required Widget child,
+  }) : super(
+          title: title,
+          subtitle: subtitle,
+          // settingKey: settingKey,
+          child: child,
+        );
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleSettingsTile(
+      title: title,
+      subtitle: subtitle,
+      // settingKey: settingKey,
+      child: child,
     );
   }
 }

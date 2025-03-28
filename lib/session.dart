@@ -41,17 +41,15 @@ class Session {
     return 'id: $id\nstarted: $started\nended: $ended\nduration: $d\nmessage: $message';
   }
   // gets a session from a csv row
-  /*
   static Session fromCsv(List<dynamic> row) {
     return Session(
       id: int.parse(row[0]),
       started: DateTime.parse(row[1]),
-      ended: int.parse(row[2]),
-      duration: int.parse(row[3]),
+      ended: DateTime.parse(row[2]),
+      duration: Duration(milliseconds: int.parse(row[3])),
       message: row[4]
     );
   }
-  */
 }
 
 // toLocalTime helper function
