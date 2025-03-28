@@ -84,7 +84,10 @@ class Session {
     return '$id,$d,$started,$ended,$message';
   }
   String DateTimeToString(DateTime d) {
-    return "${d.year}-${d.month}-${d.day}";
+    String y = d.year.toString().padLeft(4, '0');
+    String m = d.month.toString().padLeft(2, '0');
+    String day = d.day.toString().padLeft(2, '0');
+    return "$y-$m-$day";
   }
 }
 

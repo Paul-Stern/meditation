@@ -162,36 +162,26 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     Database db = await instance.db;
     int streakdays = 0;
     DateTime now = DateTime.now();
+    // var today = DateTime.now();
     final sessions = await getSessionsDesc();
-    final uniqueDays = sessions.map((e) => e.DateTimeToString(e.started)).toSet();
     if (sessions.isEmpty) {
       return 0;
     }
-    Session s = sessions.first;
-    if (now.difference(s.started).inDays > 1) {
-      return streakdays;
-    } else {
-      if (now.difference(s.started).inMinutes < 86000) {
-      streakdays += 1;
-    }
-    now = s.started;
-    Session previous = s;
-    for (var s in sessions) {
-      if (s.started == now) {
+    final uniqueDays = sessions.map((e) => e.DateTimeToString(e.started)).toSet();
+    u.log.d("uniqueDays: $uniqueDays");
+    for (var day in uniqueDays) {
+      u.log.d("day: $day\nnow: $now\nstreakdays: $streakdays");
+      if (now.difference(DateTime.parse(day)).inDays > 1) {
+        return streakdays;
+      } else if (now.difference(DateTime.parse(day)).inDays == 1) {
+        streakdays++;
+        now = DateTime.parse(day);
+      } else {
+        now = DateTime.parse(day);
         continue;
       }
-      if (now.difference(s.started).inDays > 1) {
-        return streakdays;
-      } else {
-        // check if it is the same day
-        if (now.difference(s.started).inDays == 0) {
-          now = s.started;
-          continue;
-        }
-        streakdays += 1;
-      }
-      now = s.started;
     }
+    u.log.d("streakdays: $streakdays");
     return streakdays;
-  }
+ }
 }
