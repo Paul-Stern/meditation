@@ -41,6 +41,17 @@ class Session {
   String toString() {
     return 'id: $id\nstarted: $started\nended: $ended\nduration: $duration\nmessage: $message\nstreakdays: $streakdays';
   }
+  // gets a session from a csv row
+  static Session fromCsv(List<dynamic> row) {
+    return Session(
+      id: int.parse(row[0]),
+      started: int.parse(row[1]),
+      ended: int.parse(row[2]),
+      duration: int.parse(row[3]),
+      message: row[4],
+      streakdays: int.parse(row[5])
+    );
+  }
 }
 
 // toLocalTime helper function

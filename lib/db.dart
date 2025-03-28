@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:csv/csv.dart';
 import 'package:meditation/session.dart';
 import 'package:meditation/utils.dart';
 
@@ -24,7 +27,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     String path = join(await getDatabasesPath(), _databaseName);
     return await openDatabase(
       path,
-      version: 1,
+      version: _databaseVersion,
       onCreate: _onCreate,
     );
   }
@@ -78,5 +81,15 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     // } else {
     //   return id;
     // }
+  }
+  // import sessions from csv
+  Future<void> importSessionsFromCsv(String filepath) async {
+    Database db = await instance.db;
+    final _rawData = await File(filepath).readAsString();
+    List<List<dynamic>> _csvData = const CsvToListConverter().convert(_rawData);
+    for (int i = 0; i < _csvData.length; i++) {
+      Session session = Session.fromCsv(_csvData[i]);
+      await insertSession(session);
+    }
   }
 }
