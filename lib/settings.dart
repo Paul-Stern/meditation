@@ -327,27 +327,3 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   });
 }
 }
-
-class DataSettingsTile extends SimpleSettingsTile {
-  DataSettingsTile({
-    required String title,
-    required String subtitle,
-    // required String settingKey,
-    required Widget child,
-  }) : super(
-          title: title,
-          subtitle: subtitle,
-          // settingKey: settingKey,
-          child: child,
-        );
-
-  @override
-  Widget build(BuildContext context) {
-    return SimpleSettingsTile(
-      title: title,
-      subtitle: subtitle,
-      // settingKey: settingKey,
-      child: child,
-    );
-  }
-}

@@ -138,21 +138,5 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     final String csv = const ListToCsvConverter().convert(csvData);
     u.log.d('csv: $csv');
     return utf8.encode(csv);
-
-    // final List<Map<String, Object?>> queryResult = await db.query('sessions');
-    // log.d('queryResult: $queryResult');
-    // final List<List<dynamic>> csvData = queryResult.map((e) => [
-    //   e['id'],
-    //   e['duration'],
-    //   // DateTime.fromMillisecondsSinceEpoch(int.parse(e['started'])).toString(),
-    //   e['started'],
-    //   e['ended'],
-    //   e['message']]).toList();
-    // log.d('csvData: $csvData');
-    // final String csv = const ListToCsvConverter().convert(csvData);
-    // final out = utf8.encode(csv);
-    // log.d('out: $out');
-    // return out;
- }
- // Convert
+  }
 }
