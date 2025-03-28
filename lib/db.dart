@@ -65,6 +65,12 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     return queryResult.map((e) => Session.fromMap(e)).toList();
   }
 
+  Future<List<Session>> getSessionsDesc() async {
+    Database db = await instance.db;
+    final List<Map<String, Object?>> queryResult = await db.query('sessions', orderBy: 'started DESC');
+    return queryResult.map((e) => Session.fromMap(e)).toList();
+  }
+
   Future<Duration> getTotalDuration() async {
     Database db = await instance.db;
     final List<Map<String, Object?>> queryResult = await db.query(
@@ -151,5 +157,34 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     final String csv = const ListToCsvConverter().convert(csvData);
     u.log.d('csv: $csv');
     return utf8.encode(csv);
+  }
+  Future <int> getStreakDays() async {
+    Database db = await instance.db;
+    int streakdays = 0;
+    DateTime now = DateTime.now();
+    final sessions = await getSessionsDesc();
+    if (sessions.isEmpty) {
+      return 0;
+    }
+    Session s = sessions.first;
+    if (now.difference(s.started).inDays > 1) {
+      return streakdays;
+    } else {
+      streakdays += 1;
+    }
+    now = s.started;
+    Session previous = s;
+    for (var s in sessions) {
+      if (s.started == now) {
+        continue;
+      }
+      if (now.difference(s.started).inDays > 1) {
+        return streakdays;
+      } else {
+        streakdays += 1;
+      }
+      now = s.started;
+    }
+    return streakdays;
   }
 }

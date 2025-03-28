@@ -22,8 +22,9 @@ class _StatsWidgetState extends State<StatsWidget> {
     return "$hours h $min m";
   }
 
-  Future <void> initTotalTime() async{
+  Future <void> init() async{
     totaltime = await DatabaseHelper.instance.getTotalDuration();
+    streakdays = await DatabaseHelper.instance.getStreakDays();
   }
 
  
@@ -31,7 +32,7 @@ class _StatsWidgetState extends State<StatsWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: initTotalTime(),
+      future: init(),
       builder: (context, snapshot) {
         return Card(
           child: SizedBox.expand(
@@ -39,7 +40,7 @@ class _StatsWidgetState extends State<StatsWidget> {
               child: Column(
                 children: [
                   Text("Total time: ${getTotalTime()}"),
-                  Text("Total days: ${totaldays}"),
+                  // Text("Total days: ${totaldays}"),
                   Text("Streak days: ${streakdays}"),
                 ],
               ),
