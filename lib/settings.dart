@@ -7,8 +7,12 @@ import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:get_it/get_it.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import 'package:file_picker/file_picker.dart';
+
 import 'package:meditation/audioplayer.dart';
 import 'package:meditation/utils.dart';
+import 'package:meditation/db.dart';
+
 
 const Map<String, String> audioFiles = {
   'bell_burma.ogg': 'Burma Bell',
@@ -145,7 +149,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 SimpleSettingsTile(
                   title: 'Import data',
                   onTap: () => {
-                    /*
                     // pick a file
                     FilePicker.platform
                         .pickFiles(
@@ -153,9 +156,17 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                           allowedExtensions: ['csv'],
                         )
                         .then((result) {
-                    })
-                    */
-                  }
+                          if (result != null) {
+                            var file = result.files.first;
+                            var path = file.path;
+                            if (path != null) {
+                              log.d("importing sessions from $path");
+                              DatabaseHelper.instance.importSessionsFromCsv(path);
+                            }
+                          }
+                        })
+                        .catchError((err) => log.e(err))
+                  },
                 )
               ],
             ),

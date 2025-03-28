@@ -42,13 +42,20 @@ class Session {
   }
   // gets a session from a csv row
   static Session fromCsv(List<dynamic> row) {
-    return Session(
+    final d = Duration(
+      hours: int.parse(row[1].split(':')[0]),
+      minutes: int.parse(row[1].split(':')[1]),
+    );
+
+    final s = Session(
       id: int.parse(row[0]),
-      started: DateTime.parse(row[1]),
-      ended: DateTime.parse(row[2]),
-      duration: Duration(milliseconds: int.parse(row[3])),
+      duration: d,
+      started: DateTime.parse(row[2]),
+      ended: DateTime.parse(row[3]),
       message: row[4]
     );
+    log.d('session from csv: $s');
+    return s;
   }
 }
 

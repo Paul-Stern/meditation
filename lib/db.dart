@@ -86,10 +86,32 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
   Future<void> importSessionsFromCsv(String filepath) async {
     Database db = await instance.db;
     final _rawData = await File(filepath).readAsString();
-    List<List<dynamic>> _csvData = const CsvToListConverter().convert(_rawData);
-    for (int i = 0; i < _csvData.length; i++) {
-      Session session = Session.fromCsv(_csvData[i]);
+    log.d("raw data: $_rawData");
+    // List<List<dynamic>> _csvData = const CsvToListConverter(
+    List<List<dynamic>> _csvData = const CsvToListConverter(
+      // textDelimiter: ',',
+      // fieldDelimiter: '\n',
+      eol: "\n"
+    ).convert(_rawData);
+    log.d("csv data: $_csvData");
+
+    // range over the csv data
+    for (int i = 1; i < _csvData.length; i++) {
+      var row = _csvData[i];
+      log.d('i: $i');
+      log.d("csv row: $row");
+      Session session = Session.fromCsv(row);
+      log.d("inserting session $session");
       await insertSession(session);
     }
+
+      // for (int i = 1; i < _csvData.length; i++) {
+      // var row = _csvData[i];
+      // log.d('i: $i');
+      // log.d("csv row: $row");
+      // Session session = Session.fromCsv(row);
+      // log.d("inserting session $session");
+      // await insertSession(session);
+    // }
   }
 }
