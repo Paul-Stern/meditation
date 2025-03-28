@@ -83,6 +83,9 @@ class Session {
     final String d = formatDuration(duration);
     return '$id,$d,$started,$ended,$message';
   }
+  String DateTimeToString(DateTime d) {
+    return "${d.year}-${d.month}-${d.day}";
+  }
 }
 
 // toLocalTime helper function

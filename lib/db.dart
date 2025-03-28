@@ -163,6 +163,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     int streakdays = 0;
     DateTime now = DateTime.now();
     final sessions = await getSessionsDesc();
+    final uniqueDays = sessions.map((e) => e.DateTimeToString(e.started)).toSet();
     if (sessions.isEmpty) {
       return 0;
     }
@@ -170,6 +171,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     if (now.difference(s.started).inDays > 1) {
       return streakdays;
     } else {
+      if (now.difference(s.started).inMinutes < 86000) {
       streakdays += 1;
     }
     now = s.started;
@@ -181,6 +183,11 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
       if (now.difference(s.started).inDays > 1) {
         return streakdays;
       } else {
+        // check if it is the same day
+        if (now.difference(s.started).inDays == 0) {
+          now = s.started;
+          continue;
+        }
         streakdays += 1;
       }
       now = s.started;
