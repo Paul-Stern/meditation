@@ -160,28 +160,28 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
   }
   Future <int> getStreakDays() async {
     Database db = await instance.db;
-    int streakdays = 0;
-    DateTime now = DateTime.now();
-    // var today = DateTime.now();
+    int streakdays = 1;
+    DateTime current = DateTime.now();
+    int day = current.day;
     final sessions = await getSessionsDesc();
     if (sessions.isEmpty) {
       return 0;
     }
-    final uniqueDays = sessions.map((e) => e.DateTimeToString(e.started)).toSet();
-    u.log.d("uniqueDays: $uniqueDays");
-    for (var day in uniqueDays) {
-      u.log.d("day: $day\nnow: $now\nstreakdays: $streakdays");
-      if (now.difference(DateTime.parse(day)).inDays > 1) {
+    // final = sessions.map((e) => e.DateTimeToString(e.started)).toSet();
+    for (var s in sessions) {
+      u.log.d("session started: ${s.started}\nnow: $current\nstreakdays: $streakdays");
+      if (current.difference(s.started).inDays > 1) {
         return streakdays;
-      } else if (now.difference(DateTime.parse(day)).inDays == 1) {
+        } else if (current.difference(s.started).inDays == 1 || day != s.started.day) {
         streakdays++;
-        now = DateTime.parse(day);
-      } else {
-        now = DateTime.parse(day);
+        day = s.started.day;
+        current = s.started;
+        } else {
+        current = s.started;
         continue;
+       }
       }
-    }
     u.log.d("streakdays: $streakdays");
     return streakdays;
+  }
  }
-}
