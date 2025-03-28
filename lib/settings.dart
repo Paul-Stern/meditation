@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:do_not_disturb/do_not_disturb.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:get_it/get_it.dart';
+import 'package:meditation/session.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:file_picker/file_picker.dart';
@@ -12,6 +13,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:meditation/audioplayer.dart';
 import 'package:meditation/utils.dart';
 import 'package:meditation/db.dart';
+import 'package:sqflite/sqflite.dart';
 
 
 const Map<String, String> audioFiles = {
@@ -38,8 +40,25 @@ class SettingsWidget extends StatefulWidget {
 }
 
 class _SettingsWidgetState extends State<SettingsWidget> {
+  Uint8List? exportBytes;
+
+  //override initState
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  getExportBytes() async {
+      exportBytes ??= await DatabaseHelper.instance.exportSessionsToU8intList();
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: getExportBytes(),
+      builder: (context, snapshot) {
     Map<int, String> soundsValues = {};
     for (var i = 0; i < audioFiles.length; i++) {
       soundsValues[i] = audioFiles.values.elementAt(i);
@@ -49,6 +68,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
     final GetIt getIt = GetIt.instance;
     final NAudioPlayer audioPlayer = getIt.get<NAudioPlayer>();
+
+    // exportedSessionBytes
 
     double lastVolumeValue = -1;
     int lastStartSoundValue = -1;
@@ -167,7 +188,27 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                         })
                         .catchError((err) => log.e(err))
                   },
-                )
+                ),
+              SimpleSettingsTile(
+                title: 'Export data',
+                onTap: () => {
+                  // log.d("exporting sessions to bytes");
+                  // pick a file
+                  FilePicker.platform
+                      .saveFile(
+                        type: FileType.custom,
+                        allowedExtensions: ['.csv'],
+                        bytes: exportBytes
+                      )
+                      .then((result) {
+                        if (result != null) {
+                          var path = result;
+                            log.d("exporting sessions to $path");
+                      }
+                })
+                      .catchError((err) => log.e(err))
+                },
+              ),
               ],
             ),
             SettingsGroup(
@@ -283,7 +324,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
         ),
       ),
     );
-  }
+  });
+}
 }
 
 class DataSettingsTile extends SimpleSettingsTile {
