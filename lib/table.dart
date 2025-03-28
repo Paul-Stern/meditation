@@ -3,6 +3,7 @@ import 'package:meditation/details.dart';
 import 'package:meditation/session.dart';
 import 'package:meditation/db.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:meditation/data.dart';
 import 'package:meditation/utils.dart' as u;
 
@@ -65,7 +66,7 @@ class _TableWidgetState extends State<TableWidget> {
                         DataCell(
                           Card(
                             child: InkWell(
-                              child: Text(session.started.toString()),
+                              child: Text(DateFormat.yMd().add_jms().format(session.started)),
                               onTap: 
                                 () => {
                                   u.log.d('Row was tapped!'),
