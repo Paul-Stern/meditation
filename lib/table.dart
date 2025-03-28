@@ -3,6 +3,7 @@ import 'package:meditation/session.dart';
 import 'package:meditation/db.dart';
 import 'package:flutter/material.dart';
 import 'package:meditation/data.dart';
+import 'package:meditation/utils.dart' as u;
 
 // import 'package:sqflite/sqflite.dart';
 
@@ -59,7 +60,14 @@ class _TableWidgetState extends State<TableWidget> {
                   .map(
                     (session) => DataRow(
                       cells: <DataCell>[
-                        DataCell(Text(toLocalTime(session.started).toString())),
+                        DataCell(
+                          Card(
+                            child: InkWell(
+                              child: Text(toLocalTime(session.started).toString()),
+                              onTap: () => u.log.d('Row was tapped!'),
+                              )
+                          ),
+                        ),
                         DataCell(Text(formatDuration(toDuration(session.duration)))),
                       ],
                     ),
