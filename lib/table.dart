@@ -66,7 +66,7 @@ class _TableWidgetState extends State<TableWidget> {
                         DataCell(
                           Card(
                             child: InkWell(
-                              child: Text(DateFormat.yMd().add_jms().format(session.started)),
+                              child: Text(DateFormat.yMd().add_jms().format(session.started.toLocal())),
                               onTap: 
                                 () => {
                                   u.log.d('Row was tapped!'),

@@ -131,7 +131,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     [
       e['id'],
       e['duration'],
-      e['started'],
+      e['started'] as String ,
       e['ended'],
       e['message']
       ]

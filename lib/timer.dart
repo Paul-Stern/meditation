@@ -521,8 +521,8 @@ class _TimerWidgetState extends State<TimerWidget> with SingleTickerProviderStat
 
     db.insertSession(Session(
       id: sessionID,
-      started: startTime,
-      ended: endTime,
+      started: startTime.toUtc(),
+      ended: endTime.toUtc(),
       duration: dur,
       message: ""
     ));

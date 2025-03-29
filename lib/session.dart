@@ -1,4 +1,6 @@
 import 'package:meditation/utils.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 
 class Session {
   final int id;
@@ -68,11 +70,19 @@ class Session {
       id = row[0];
     }
 
+    // set timezone as UTC
+    var st = DateTime.parse(row[2] + "-0000");
+    var en = DateTime.parse(row[3] + "-0000");
+    log.d("st: $st\nen: $en");
+    // st = st.
+    // en = DateFormat().parse(en.toIso8601String(), true);
+    // log.d("st: $st\nen: $en");
+
     final s = Session(
       id: id,
       duration: d,
-      started: DateTime.parse(row[2]),
-      ended: DateTime.parse(row[3]),
+      started: st,
+      ended: en,
       message: row[4]
     );
     log.d('session from csv: $s');
@@ -85,7 +95,7 @@ class Session {
   }
 }
   
-  String DateTimeToString(DateTime d) {
+  String dateTimeToString(DateTime d) {
     String y = d.year.toString().padLeft(4, '0');
     String m = d.month.toString().padLeft(2, '0');
     String day = d.day.toString().padLeft(2, '0');
