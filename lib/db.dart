@@ -148,8 +148,8 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     [
       e.id,
       formatDuration(e.duration),
-      e.started.toIso8601String(),
-      e.ended.toIso8601String(),
+      e.started.toUtc(),
+      e.ended.toUtc(),
       e.message
       ]
     ).toList();
