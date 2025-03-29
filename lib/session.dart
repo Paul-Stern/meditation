@@ -71,8 +71,20 @@ class Session {
     }
 
     // set timezone as UTC
-    var st = DateTime.parse(row[2] + "-0000");
-    var en = DateTime.parse(row[3] + "-0000");
+    final r2 = row[2];
+    DateTime st;
+    DateTime en;
+    if (r2.toString().contains('Z')) {
+      st = DateTime.parse(r2);
+    } else {
+      st = DateTime.parse(r2 + "Z");
+    }
+    final r3 = row[3];
+    if (r3.toString().contains('Z')) {
+      en = DateTime.parse(r3);
+    } else {
+      en = DateTime.parse(r3 + "Z");
+    }
     log.d("st: $st\nen: $en");
     // st = st.
     // en = DateFormat().parse(en.toIso8601String(), true);
