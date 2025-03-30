@@ -44,8 +44,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
         started INTEGER NOT NULL,
         ended INTEGER NOT NULL,
         duration INTEGER NOT NULL,
-        message TEXT,
-        streakdays INTEGER
+        message TEXT
     )
     '''); 
   }
@@ -155,7 +154,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
       ]
     ).toList();
     u.log.d('csvData: $csvData');
-    final String csv = const ListToCsvConverter().convert(csvData);
+    final String csv = const ListToCsvConverter(eol: "\n").convert(csvData);
     u.log.d('csv: $csv');
     return utf8.encode(csv);
   }
