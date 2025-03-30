@@ -217,7 +217,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 },
               ),
               SimpleSettingsTile(
-                title: 'Export database',
+                title: 'Backup database',
                 onTap: () => {
                   log.d("dumping database"),
                   FilePicker.platform

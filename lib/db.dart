@@ -144,7 +144,8 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
   Future <Uint8List> exportSessionsToU8intList() async {
     Database db = await instance.db;
     final List<Session> sessions = await getSessions();
-    final List<List<dynamic>> csvData = sessions.map((e) =>
+    final List<List<dynamic>> csvData = [['id', 'duration', 'started', 'ended', 'message']];
+    final List<List<dynamic>> sesData = sessions.map((e) =>
     [
       e.id,
       formatDuration(e.duration),
@@ -153,6 +154,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
       e.message
       ]
     ).toList();
+    csvData.addAll(sesData);
     u.log.d('csvData: $csvData');
     final String csv = const ListToCsvConverter(eol: "\n").convert(csvData);
     u.log.d('csv: $csv');
