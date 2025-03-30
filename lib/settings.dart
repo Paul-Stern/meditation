@@ -234,6 +234,28 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 })
                       .catchError((err) => log.e(err))
                 }
+              ),
+              SimpleSettingsTile(
+                title: 'Restore database',
+                onTap: () async {
+                  log.d("Ask to choose file");
+                  FilePicker.platform
+                      .pickFiles(
+                        type: FileType.custom,
+                        allowedExtensions: ['db'],
+                      )
+                      .then((result) {
+                        if (result != null) {
+                          var file = result.files.first;
+                          var path = file.path;
+                          if (path != null) {
+                            log.d("Restoring database from $path");
+                            DatabaseHelper.instance.restoreDb(path);
+                          }
+                        }
+                      })
+                      .catchError((err) => log.e(err));
+                },
               )
               ],
             ),

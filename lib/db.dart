@@ -191,4 +191,9 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
 
     return File(path).readAsBytesSync();
   }
+
+  Future<void> restoreDb(String sourcePath) async {
+    final path = join(await getDatabasesPath(), _databaseName);
+    await File(sourcePath).copy(path);
+  }
  }
