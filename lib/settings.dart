@@ -41,16 +41,23 @@ class SettingsWidget extends StatefulWidget {
 
 class _SettingsWidgetState extends State<SettingsWidget> {
   Uint8List? exportBytes;
+  Uint8List? exportBytesDb;
 
   //override initState
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getExportBytes();
+    getExportBytesDb();
   }
 
   getExportBytes() async {
       exportBytes ??= await DatabaseHelper.instance.exportSessionsToU8intList();
+  }
+
+  getExportBytesDb() async {
+      exportBytesDb ??= await DatabaseHelper.instance.backupDb();
   }
 
 
@@ -192,7 +199,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               SimpleSettingsTile(
                 title: 'Export data',
                 onTap: () => {
-                  // log.d("exporting sessions to bytes");
+                  // log.d("exporting sessions to bytes"),
                   // pick a file
                   FilePicker.platform
                       .saveFile(
@@ -209,6 +216,25 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       .catchError((err) => log.e(err))
                 },
               ),
+              SimpleSettingsTile(
+                title: 'Export database',
+                onTap: () => {
+                  log.d("dumping database"),
+                  FilePicker.platform
+                      .saveFile(
+                        type: FileType.custom,
+                        allowedExtensions: ['db'],
+                        bytes: exportBytesDb
+                      )
+                      .then((result) {
+                        if (result != null) {
+                          var path = result;
+                            log.d("dumping database complete");
+                      }
+                })
+                      .catchError((err) => log.e(err))
+                }
+              )
               ],
             ),
             SettingsGroup(

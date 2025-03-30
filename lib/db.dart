@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'dart:convert' show utf8;
 
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:csv/csv.dart';
@@ -183,5 +184,12 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
       }
     u.log.d("streakdays: $streakdays");
     return streakdays;
+  }
+
+  // backup db
+  Future<Uint8List> backupDb() async {
+    final path = join(await getDatabasesPath(), _databaseName);
+
+    return File(path).readAsBytesSync();
   }
  }
