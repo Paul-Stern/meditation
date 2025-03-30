@@ -53,15 +53,16 @@ class Session {
     );
     } else if (dstring.length == 3) {
        d = Duration(
-        hours: int.parse(row[1].split(':')[0]),
-        minutes: int.parse(row[1].split(':')[1]),
-        seconds: int.parse(row[1].split(':')[2]),
+        hours: int.parse(dstring[0]),
+        minutes: int.parse(dstring[1]),
+        seconds: int.parse(dstring[2]),
       );
     } else {
       // wrong format
       log.e('wrong duration format');
     }
 
+    // TODO: rewrite with switch?
     // check row[0] type
     var id = 0;
     if (row[0].runtimeType != int) {
@@ -70,10 +71,11 @@ class Session {
       id = row[0];
     }
 
-    // set timezone as UTC
     final r2 = row[2];
     DateTime st;
     DateTime en;
+    // TODO: rewrite with switch?
+    // set timezone as UTC
     if (r2.toString().contains('Z')) {
       st = DateTime.parse(r2);
     } else {
