@@ -57,7 +57,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   }
 
   getExportBytesDb() async {
-      exportBytesDb ??= await DatabaseHelper.instance.backupDb();
+      exportBytesDb ??= await DatabaseHelper.instance.dumpDb();
   }
 
 

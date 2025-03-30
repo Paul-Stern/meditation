@@ -187,7 +187,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
   }
 
   // backup db
-  Future<Uint8List> backupDb() async {
+  Future<Uint8List> dumpDb() async {
     final path = join(await getDatabasesPath(), _databaseName);
 
     return File(path).readAsBytesSync();
