@@ -88,9 +88,6 @@ class Session {
       en = DateTime.parse(r3 + "Z");
     }
     log.d("st: $st\nen: $en");
-    // st = st.
-    // en = DateFormat().parse(en.toIso8601String(), true);
-    // log.d("st: $st\nen: $en");
 
     final s = Session(
       id: id,

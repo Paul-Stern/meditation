@@ -175,7 +175,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               title: 'Data',
               children: [
                 SimpleSettingsTile(
-                  title: 'Import data',
+                  title: 'Import as csv',
                   onTap: () => {
                     // pick a file
                     FilePicker.platform
@@ -197,7 +197,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   },
                 ),
               SimpleSettingsTile(
-                title: 'Export data',
+                title: 'Export as csv',
                 onTap: () => {
                   // log.d("exporting sessions to bytes"),
                   // pick a file

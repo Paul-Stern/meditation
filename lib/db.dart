@@ -98,12 +98,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     } else {
       return (queryResult.first['id'] as int) + 1;
     }
-    // if (id == null) {
-    //   return 0;
-    // } else {
-    //   return id;
-    // }
-  }
+ }
   // import sessions from csv
   Future<void> importSessionsFromCsv(String filepath) async {
     Database db = await instance.db;
@@ -124,25 +119,8 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
       await insertSession(session);
     }
  }
- Future<void> exportSessionsToCsv(String filepath) async {
-    Database db = await instance.db;
-    final List<Map<String, Object?>> queryResult = await db.query('sessions');
-    final List<List<dynamic>> csvData = queryResult.map((e) =>
-    [
-      e['id'],
-      e['duration'],
-      e['started'] as String ,
-      e['ended'],
-      e['message']
-      ]
-    ).toList();
-    final String csv = const ListToCsvConverter().convert(csvData);
-    u.log.d('csv: $csv');
-    await File(filepath).writeAsString(csv);
- }
- // exportSessionsToU8intList
+// exportSessionsToU8intList
   Future <Uint8List> exportSessionsToU8intList() async {
-    Database db = await instance.db;
     final List<Session> sessions = await getSessions();
     final List<List<dynamic>> csvData = [['id', 'duration', 'started', 'ended', 'message']];
     final List<List<dynamic>> sesData = sessions.map((e) =>
@@ -161,7 +139,6 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
     return utf8.encode(csv);
   }
   Future <int> getStreakDays() async {
-    Database db = await instance.db;
     int streakdays = 0;
     DateTime current = DateTime.now();
     int day = current.day;
