@@ -162,7 +162,7 @@ static final DatabaseHelper instance = DatabaseHelper._instance();
   }
   Future <int> getStreakDays() async {
     Database db = await instance.db;
-    int streakdays = 1;
+    int streakdays = 0;
     DateTime current = DateTime.now();
     int day = current.day;
     final sessions = await getSessionsDesc();
